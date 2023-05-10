@@ -1,11 +1,22 @@
-import Navbar from './components/Navabar'
+import Navbar from './components/Navabar';
 import CartContainer from './components/CartContainer';
+import { useDispatch, useSelector } from 'react-redux';
+import { calculateTotals } from './features/cart/cartSlice';
+import { useEffect } from 'react';
 
 function App() {
-  return (<main>
-    <Navbar />
-    <CartContainer />
-  </main>
+  const { cartItems } = useSelector((store) => store.cart);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(calculateTotals());
+  }, [cartItems]);
+
+  return (
+    <main>
+      <Navbar />
+      <CartContainer />
+    </main>
   );
 }
 export default App;
